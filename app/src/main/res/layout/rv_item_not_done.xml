@@ -14,17 +14,18 @@
         android:paddingStart="?android:listPreferredItemPaddingStart"
         android:paddingEnd="?android:listPreferredItemPaddingEnd">
 
-        <TextView android:id="@+id/text1"
+        <TextView android:id="@+id/text_not_done1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textAppearance="?attr/textAppearanceListItem" />
 
-        <TextView android:id="@+id/text2"
+        <TextView
+            android:id="@+id/text_not_done2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text1"
-            android:layout_alignStart="@id/text1"
+            android:layout_alignStart="@id/text_not_done1"
+            android:layout_below="@id/text_not_done1"
             android:text="10.10.10 10:10"
             android:textAppearance="?attr/textAppearanceListItemSecondary" />
 

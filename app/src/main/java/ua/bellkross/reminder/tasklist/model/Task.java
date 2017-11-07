@@ -1,4 +1,4 @@
-package ua.bellkross.reminder.tasklist.fragment_not_done.model;
+package ua.bellkross.reminder.tasklist.model;
 
 
 import java.text.DateFormat;
@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class TaskNotDone {
+public class Task {
 
     public static final int NEW_ITEM_POSITION = -1;
     private String task;
@@ -17,7 +17,7 @@ public class TaskNotDone {
     private int positionInList;
     private int positionInDatabase;
 
-    public TaskNotDone(String task, int positionInList){
+    public Task(String task, int positionInList){
         this.task = task;
         this.positionInDatabase = NEW_ITEM_POSITION;
         this.positionInList = positionInList;
@@ -29,7 +29,7 @@ public class TaskNotDone {
         this.done = 1;
     }
 
-    public TaskNotDone(String task, String deadline, int positionInList) {
+    public Task(String task, String deadline, int positionInList) {
         this.task = task;
         this.deadline = deadline;
         DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
@@ -43,7 +43,7 @@ public class TaskNotDone {
         this.done = 1;
     }
 
-    public TaskNotDone(String task, String deadline, int positionInList, int positionInDatabase) {
+    public Task(String task, String deadline, int positionInList, int positionInDatabase) {
         this.task = task;
         this.deadline = deadline;
         DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
@@ -58,7 +58,7 @@ public class TaskNotDone {
         this.done = 1;
     }
 
-    public TaskNotDone(String task, String deadline, int positionInList, int positionInDatabase, int state) {
+    public Task(String task, String deadline, int positionInList, int positionInDatabase, int state) {
         this.task = task;
         this.deadline = deadline;
         DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
@@ -73,7 +73,7 @@ public class TaskNotDone {
         this.done = state;
     }
 
-    public TaskNotDone(String task, String deadline, long dateOfDeadline, int positionInList, int positionInDatabase, int state) {
+    public Task(String task, String deadline, long dateOfDeadline, int positionInList, int positionInDatabase, int state) {
         this.task = task;
         this.deadline = deadline;
         this.dateOfDeadline = new Date(dateOfDeadline);
@@ -132,7 +132,7 @@ public class TaskNotDone {
 
     @Override
     public String toString() {
-        return "TaskNotDone{" +
+        return "Task{" +
                 "task='" + task + '\'' +
                 ", deadline='" + deadline + '\'' +
                 ", dateOfDeadline=" + dateOfDeadline +

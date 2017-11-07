@@ -7,14 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import ua.bellkross.reminder.R;
@@ -22,7 +18,7 @@ import ua.bellkross.reminder.database.DBHelper;
 import ua.bellkross.reminder.tasklist.fragment_done.DoneFragment;
 import ua.bellkross.reminder.tasklist.fragment_not_done.NotDoneFragment;
 import ua.bellkross.reminder.tasklist.fragment_not_done.RecyclerAdapterND;
-import ua.bellkross.reminder.tasklist.fragment_not_done.model.ArrayListNDTasks;
+import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
 
 public class TaskListActivity extends AppCompatActivity {
 

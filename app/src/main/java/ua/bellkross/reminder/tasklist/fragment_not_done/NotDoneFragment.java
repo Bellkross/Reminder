@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import ua.bellkross.reminder.R;
-import ua.bellkross.reminder.tasklist.fragment_not_done.model.ArrayListNDTasks;
+import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
 
 public class NotDoneFragment extends Fragment implements SearchView.OnQueryTextListener {
 

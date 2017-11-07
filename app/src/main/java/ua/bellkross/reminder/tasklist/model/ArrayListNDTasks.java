@@ -1,22 +1,17 @@
-package ua.bellkross.reminder.tasklist.fragment_not_done.model;
+package ua.bellkross.reminder.tasklist.model;
 
-
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
-import ua.bellkross.reminder.database.DBHelper;
+public class ArrayListNDTasks extends ArrayList<Task> {
 
-public class ArrayListNDTasks extends ArrayList<TaskNotDone> {
-
-    private static ArrayList<TaskNotDone> instance;
+    private static ArrayList<Task> instance;
 
     private ArrayListNDTasks() {
         instance = new ArrayList<>();
     }
 
-    public static ArrayList<TaskNotDone> getInstance() {
+    public static ArrayList<Task> getInstance() {
         if (instance == null) {
             new ArrayListNDTasks();
             return instance;
@@ -28,7 +23,7 @@ public class ArrayListNDTasks extends ArrayList<TaskNotDone> {
     @Override
     public String toString() {
         String result = "ArrayListNDTasks { ";
-        for (TaskNotDone item : instance) {
+        for (Task item : instance) {
             result += "; " + item.toString();
         }
         return result + " }";

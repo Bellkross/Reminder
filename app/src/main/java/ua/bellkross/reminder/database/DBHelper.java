@@ -6,14 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
-import ua.bellkross.reminder.tasklist.fragment_not_done.model.ArrayListNDTasks;
-import ua.bellkross.reminder.tasklist.fragment_not_done.model.TaskNotDone;
-
-import static ua.bellkross.reminder.tasklist.TaskListActivity.LOG_TAG;
+import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
+import ua.bellkross.reminder.tasklist.model.Task;
 
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "BELLDB";
@@ -31,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         instance = this;
     }
 
-    public int addInDB(TaskNotDone task) {
+    public int addInDB(Task task) {
         SQLiteDatabase db = getWritableDatabase();
         db.query(TABLE_NAME, null, null, null, null, null, DEADLINE_TAG);
         ContentValues contentValues = new ContentValues();
@@ -47,9 +44,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return position;
     }
 
-    public ArrayList<TaskNotDone> sortTasks() {
+    public ArrayList<Task> sortTasks() {
         int positionInList = -1;
-        ArrayList<TaskNotDone> tasks = new ArrayList<>();
+        ArrayList<Task> tasks = new ArrayList<>();
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, DEADLINE_DATE_TAG);
         if (cursor.moveToFirst()) {
@@ -59,7 +56,7 @@ public class DBHelper extends SQLiteOpenHelper {
             int deadlineIndex = cursor.getColumnIndex(DEADLINE_TAG);
             int stateIndex = cursor.getColumnIndex(STATE_TAG);
             do {
-                tasks.add(new TaskNotDone(cursor.getString(taskIndex), cursor.getString(deadlineIndex),
+                tasks.add(new Task(cursor.getString(taskIndex), cursor.getString(deadlineIndex),
                         cursor.getLong(deadlineDateIndex), ++positionInList, cursor.getInt(taskIDindex),
                         cursor.getInt(stateIndex)));
             } while (cursor.moveToNext());
@@ -79,7 +76,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void clearAll() {
         SQLiteDatabase db = getWritableDatabase();
-        for (TaskNotDone item: ArrayListNDTasks.getInstance()) {
+        for (Task item: ArrayListNDTasks.getInstance()) {
             db.delete(TABLE_NAME, ID_TAG + " = " + item.getPositionInDatabase(), null);
         }
         db.close();
