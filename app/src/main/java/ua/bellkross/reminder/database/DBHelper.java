@@ -66,6 +66,29 @@ public class DBHelper extends SQLiteOpenHelper {
         return tasks;
     }
 
+    public ArrayList<Task> sortTasks(int doneState) {
+        int positionInList = -1;
+        ArrayList<Task> tasks = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, DEADLINE_DATE_TAG);
+        if (cursor.moveToFirst()) {
+            int taskIDindex = cursor.getColumnIndex(ID_TAG);
+            int taskIndex = cursor.getColumnIndex(TASK_TAG);
+            int deadlineDateIndex = cursor.getColumnIndex(DEADLINE_DATE_TAG);
+            int deadlineIndex = cursor.getColumnIndex(DEADLINE_TAG);
+            int stateIndex = cursor.getColumnIndex(STATE_TAG);
+            do {
+                if (cursor.getInt(stateIndex) == doneState)
+                    tasks.add(new Task(cursor.getString(taskIndex), cursor.getString(deadlineIndex),
+                            cursor.getLong(deadlineDateIndex), ++positionInList, cursor.getInt(taskIDindex),
+                            cursor.getInt(stateIndex)));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return tasks;
+    }
+
     public void removeFromDB(String id) {
         if (!id.equals("")) {
             SQLiteDatabase db = getWritableDatabase();
@@ -76,8 +99,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void clearAll() {
         SQLiteDatabase db = getWritableDatabase();
-        for (Task item: ArrayListNDTasks.getInstance()) {
+        for (Task item : ArrayListNDTasks.getInstance()) {
             db.delete(TABLE_NAME, ID_TAG + " = " + item.getPositionInDatabase(), null);
+        }
+        db.close();
+    }
+
+    public void clearAll(int doneState) {
+        SQLiteDatabase db = getWritableDatabase();
+        for (Task item : ArrayListNDTasks.getInstance()) {
+            if (item.getDone() == doneState)
+                db.delete(TABLE_NAME, ID_TAG + " = " + item.getPositionInDatabase(), null);
         }
         db.close();
     }

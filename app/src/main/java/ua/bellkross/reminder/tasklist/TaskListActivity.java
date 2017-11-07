@@ -1,11 +1,11 @@
 package ua.bellkross.reminder.tasklist;
 
 import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,6 +22,8 @@ import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
 
 public class TaskListActivity extends AppCompatActivity {
 
+    public static final int DONE_STATE = 1;
+    public static final int NOT_DONE_STATE = 0;
     public static final String LOG_TAG = "debug";
     private Toolbar toolbar;
     private Spinner spinner;
@@ -62,7 +64,7 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     @SuppressLint("RestrictedApi")
-    private void initActionBar(){
+    private void initActionBar() {
         toolbar = findViewById(R.id.toolbar);
         toolbar.setCollapsible(false);
         spinner = findViewById(R.id.spinner);
@@ -82,7 +84,7 @@ public class TaskListActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+                switch (position) {
                     case 0:
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.container, NotDoneFragment.getInstance()).commit();

@@ -15,14 +15,16 @@ import ua.bellkross.reminder.database.DBHelper;
 import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
 import ua.bellkross.reminder.tasklist.model.Task;
 
-public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder>{
+import static ua.bellkross.reminder.tasklist.TaskListActivity.NOT_DONE_STATE;
+
+public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> {
 
     public static RecyclerAdapterND instance;
     private LayoutInflater layoutInflater;
     private ArrayList<Task> arrayList;
     private View.OnClickListener onClickListener;
 
-    private RecyclerAdapterND(Context context, View.OnClickListener onClickListener){
+    private RecyclerAdapterND(Context context, View.OnClickListener onClickListener) {
 
         this.onClickListener = onClickListener;
         layoutInflater = LayoutInflater.from(context);
@@ -34,7 +36,7 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder>{
     }
 
     public static RecyclerAdapterND getInstance(Context context, View.OnClickListener onClickListener) {
-        return instance==null ? new RecyclerAdapterND(context, onClickListener) : instance;
+        return instance == null ? new RecyclerAdapterND(context, onClickListener) : instance;
     }
 
     public static RecyclerAdapterND getInstance() {
@@ -95,27 +97,27 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder>{
         sort();
     }
 
-    public void update(Task inputTask, int listPos, int dbPos){
+    public void update(Task inputTask, int listPos, int dbPos) {
         //DBHelper.getInstance().updateDB(""+posDB,inputTask);
-        ArrayListNDTasks.getInstance().set(listPos,inputTask);
+        ArrayListNDTasks.getInstance().set(listPos, inputTask);
         //ArrayListNDTasks.getInstance().sort();
         sort();
     }
 
-    public void remove(int dbPos){
-        DBHelper.getInstance().removeFromDB(dbPos+"");
+    public void remove(int dbPos) {
+        DBHelper.getInstance().removeFromDB(dbPos + "");
         sort();
     }
 
-    public void sort(){
-        arrayList = DBHelper.getInstance().sortTasks();
+    public void sort() {
+        arrayList = DBHelper.getInstance().sortTasks(NOT_DONE_STATE);
         ArrayListNDTasks.getInstance().clear();
         ArrayListNDTasks.getInstance().addAll(arrayList);
         notifyDataSetChanged();
     }
 
-    public void clearAll(){
-        DBHelper.getInstance().clearAll();
+    public void clearAll() {
+        DBHelper.getInstance().clearAll(NOT_DONE_STATE);
         ArrayListNDTasks.getInstance().clear();
         arrayList = ArrayListNDTasks.getInstance();
         notifyDataSetChanged();

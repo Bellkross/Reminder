@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import static ua.bellkross.reminder.tasklist.TaskListActivity.NOT_DONE_STATE;
+
 public class Task {
 
     public static final int NEW_ITEM_POSITION = -1;
@@ -26,7 +28,7 @@ public class Task {
         dateOfDeadline.setTime(dateOfDeadline.getTime() + (1000 * 60 * 60 * 24 * 7));
         DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
         this.deadline = dateFormat.format(dateOfDeadline);
-        this.done = 1;
+        this.done = NOT_DONE_STATE;
     }
 
     public Task(String task, String deadline, int positionInList) {
@@ -40,7 +42,7 @@ public class Task {
         }
         this.positionInDatabase = NEW_ITEM_POSITION;
         this.positionInList = positionInList;
-        this.done = 1;
+        this.done = NOT_DONE_STATE;
     }
 
     public Task(String task, String deadline, int positionInList, int positionInDatabase) {
@@ -55,7 +57,7 @@ public class Task {
         this.positionInDatabase = NEW_ITEM_POSITION;
         this.positionInList = positionInList;
         this.positionInDatabase = positionInDatabase;
-        this.done = 1;
+        this.done = NOT_DONE_STATE;
     }
 
     public Task(String task, String deadline, int positionInList, int positionInDatabase, int state) {

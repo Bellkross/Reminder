@@ -16,7 +16,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
 
         tvTask = itemView.findViewById(R.id.text_not_done1);
-        tvDeadline = itemView.findViewById(R.id.text2);
+        tvDeadline = itemView.findViewById(R.id.text_not_done2);
         //task.setPaintFlags(task.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
