@@ -138,6 +138,7 @@ public class Task {
                 "task='" + task + '\'' +
                 ", deadline='" + deadline + '\'' +
                 ", dateOfDeadline=" + dateOfDeadline +
+                ", done=" + done +
                 ", positionInList=" + positionInList +
                 ", positionInDatabase=" + positionInDatabase +
                 '}';

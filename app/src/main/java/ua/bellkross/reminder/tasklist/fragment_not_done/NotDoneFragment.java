@@ -13,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import ua.bellkross.reminder.R;
+import ua.bellkross.reminder.tasklist.fragment_done.RecyclerAdapterDone;
+import ua.bellkross.reminder.tasklist.model.ArrayListDTasks;
 import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
+import ua.bellkross.reminder.tasklist.model.Task;
 
 public class NotDoneFragment extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -45,14 +48,14 @@ public class NotDoneFragment extends Fragment implements SearchView.OnQueryTextL
         View view = inflater.inflate(R.layout.fragment_not_done, container, false);
         setHasOptionsMenu(true);
         recyclerView = view.findViewById(R.id.recycler_not_done);
+        RecyclerAdapterDone.getInstance(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(RecyclerAdapterND.getInstance(getContext(), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int recyclerViewPosition = recyclerView.getChildAdapterPosition(view);
-                RecyclerAdapterND.getInstance().remove(ArrayListNDTasks.getInstance().
-                        get(recyclerViewPosition).getPositionInDatabase());
-            }
+        recyclerView.setAdapter(RecyclerAdapterND.getInstance(getContext(), view1 -> {
+            int recyclerViewPosition = recyclerView.getChildAdapterPosition(view1);
+            Task tmpTask = ArrayListNDTasks.getInstance().get(recyclerViewPosition);
+            RecyclerAdapterND.getInstance().remove(tmpTask.getPositionInDatabase());
+            tmpTask.setDone(1);
+            RecyclerAdapterDone.getInstance().add(tmpTask);
         }));
 
         return view;

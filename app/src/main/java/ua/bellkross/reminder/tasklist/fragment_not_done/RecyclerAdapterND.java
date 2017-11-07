@@ -12,12 +12,13 @@ import java.util.Locale;
 
 import ua.bellkross.reminder.R;
 import ua.bellkross.reminder.database.DBHelper;
+import ua.bellkross.reminder.tasklist.TaskAdapter;
 import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
 import ua.bellkross.reminder.tasklist.model.Task;
 
 import static ua.bellkross.reminder.tasklist.TaskListActivity.NOT_DONE_STATE;
 
-public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> {
+public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> implements TaskAdapter{
 
     public static RecyclerAdapterND instance;
     private LayoutInflater layoutInflater;
@@ -30,7 +31,6 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> {
         layoutInflater = LayoutInflater.from(context);
         this.arrayList = new ArrayList<>();
         sort();
-        this.arrayList.addAll(ArrayListNDTasks.getInstance());
         this.instance = this;
 
     }
@@ -66,6 +66,7 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> {
         return ArrayListNDTasks.getInstance().size();
     }
 
+    @Override
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
         ArrayListNDTasks.getInstance().clear();
@@ -83,20 +84,17 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> {
 
     public void add(String task) {
         Task inputTask = new Task(task, ArrayListNDTasks.getInstance().size());
-        ArrayListNDTasks.getInstance().add(inputTask);
-        arrayList.add(inputTask);
         DBHelper.getInstance().addInDB(inputTask);
         sort();
     }
 
     public void add(String task, String deadline) {
         Task inputTask = new Task(task, deadline, ArrayListNDTasks.getInstance().size());
-        ArrayListNDTasks.getInstance().add(inputTask);
-        arrayList.add(inputTask);
         DBHelper.getInstance().addInDB(inputTask);
         sort();
     }
 
+    @Override
     public void update(Task inputTask, int listPos, int dbPos) {
         //DBHelper.getInstance().updateDB(""+posDB,inputTask);
         ArrayListNDTasks.getInstance().set(listPos, inputTask);
@@ -104,18 +102,16 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> {
         sort();
     }
 
-    public void remove(int dbPos) {
-        DBHelper.getInstance().removeFromDB(dbPos + "");
-        sort();
-    }
-
+    @Override
     public void sort() {
         arrayList = DBHelper.getInstance().sortTasks(NOT_DONE_STATE);
         ArrayListNDTasks.getInstance().clear();
         ArrayListNDTasks.getInstance().addAll(arrayList);
         notifyDataSetChanged();
+
     }
 
+    @Override
     public void clearAll() {
         DBHelper.getInstance().clearAll(NOT_DONE_STATE);
         ArrayListNDTasks.getInstance().clear();
