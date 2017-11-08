@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/eam_accept"
+        android:icon="@drawable/ic_action_accept"
+        android:title="@string/eam_accept"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/eam_share"
+        android:orderInCategory="100"
+        android:title="@string/eam_share"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/eam_delete"
+        android:orderInCategory="100"
+        android:title="@string/eam_delete"
+        app:showAsAction="never" />
+</menu>

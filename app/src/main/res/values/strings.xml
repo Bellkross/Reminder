@@ -12,4 +12,7 @@
     <string name="action_clear_all">Clear all</string>
     <string name="et_input_task_hint">Input your task</string>
     <string name="iv_accept_description">button for accepting add of task</string>
+    <string name="eam_delete">Delete task</string>
+    <string name="eam_share">Share task</string>
+    <string name="eam_accept">accept</string>
 </resources>

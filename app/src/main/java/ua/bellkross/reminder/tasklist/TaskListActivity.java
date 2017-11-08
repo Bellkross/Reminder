@@ -1,6 +1,7 @@
 package ua.bellkross.reminder.tasklist;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 
 import ua.bellkross.reminder.R;
 import ua.bellkross.reminder.database.DBHelper;
+import ua.bellkross.reminder.edit.EditActivity;
 import ua.bellkross.reminder.tasklist.fragment_done.DoneFragment;
 import ua.bellkross.reminder.tasklist.fragment_not_done.NotDoneFragment;
 import ua.bellkross.reminder.tasklist.fragment_not_done.RecyclerAdapterND;
@@ -25,6 +27,7 @@ public class TaskListActivity extends AppCompatActivity {
     public static final int DONE_STATE = 1;
     public static final int NOT_DONE_STATE = 0;
     public static final String LOG_TAG = "debug";
+    public static final String ADD_ELEMENT_ACTION_TAG = "Add new element action";
     private Toolbar toolbar;
     private Spinner spinner;
     private FloatingActionButton fab;
@@ -42,7 +45,10 @@ public class TaskListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RecyclerAdapterND.getInstance().add("Task # " + ArrayListNDTasks.getInstance().size());
+                Intent intent = new Intent(getApplicationContext(), EditActivity.class);
+                intent.putExtra(ADD_ELEMENT_ACTION_TAG, true);
+                startActivity(intent);
+//                RecyclerAdapterND.getInstance().add("Task # " + ArrayListNDTasks.getInstance().size());
             }
         });
 
