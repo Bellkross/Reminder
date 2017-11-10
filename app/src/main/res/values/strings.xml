@@ -15,4 +15,8 @@
     <string name="eam_delete">Delete task</string>
     <string name="eam_share">Share task</string>
     <string name="eam_accept">accept</string>
+
+    <string name="choose_date">Выберите дату</string>
+    <string name="choose_time">Выберите время</string>
+    <string name="ready">Готово</string>
 </resources>

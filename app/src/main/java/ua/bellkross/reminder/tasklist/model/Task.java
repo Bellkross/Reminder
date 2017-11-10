@@ -26,7 +26,7 @@ public class Task {
         dateOfDeadline = new Date(System.currentTimeMillis());
         //1000 ms = 1 s * 3600 = 1 h * 24 = 1 day * 1 = 1 week
         dateOfDeadline.setTime(dateOfDeadline.getTime() + (1000 * 60 * 60 * 24 * 7));
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh:mm", Locale.ENGLISH);
         this.deadline = dateFormat.format(dateOfDeadline);
         this.done = NOT_DONE_STATE;
     }
@@ -34,7 +34,7 @@ public class Task {
     public Task(String task, String deadline, int positionInList) {
         this.task = task;
         this.deadline = deadline;
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh:mm", Locale.ENGLISH);
         try {
             this.dateOfDeadline = dateFormat.parse(deadline);
         } catch (ParseException e) {
@@ -48,7 +48,7 @@ public class Task {
     public Task(String task, String deadline, int positionInList, int positionInDatabase) {
         this.task = task;
         this.deadline = deadline;
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh:mm", Locale.ENGLISH);
         try {
             this.dateOfDeadline = dateFormat.parse(deadline);
         } catch (ParseException e) {
@@ -63,7 +63,7 @@ public class Task {
     public Task(String task, String deadline, int positionInList, int positionInDatabase, int state) {
         this.task = task;
         this.deadline = deadline;
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy hh:mm", Locale.ENGLISH);
         try {
             this.dateOfDeadline = dateFormat.parse(deadline);
         } catch (ParseException e) {
