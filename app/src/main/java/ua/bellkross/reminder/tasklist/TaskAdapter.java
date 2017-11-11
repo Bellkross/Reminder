@@ -7,7 +7,7 @@ import ua.bellkross.reminder.tasklist.model.Task;
 public interface TaskAdapter {
 
     void filter(String charText);
-    void update(Task inputTask, int listPos, int dbPos);
+    void update(Task inputTask, int dbPos);
     default void remove(int dbPos) {
         DBHelper.getInstance().removeFromDB(dbPos + "");
         sort();

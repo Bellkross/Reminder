@@ -1,5 +1,6 @@
 package ua.bellkross.reminder.tasklist.fragment_not_done;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +14,14 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import ua.bellkross.reminder.R;
+import ua.bellkross.reminder.edit.EditActivity;
 import ua.bellkross.reminder.tasklist.fragment_done.RecyclerAdapterDone;
-import ua.bellkross.reminder.tasklist.model.ArrayListDTasks;
 import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
 import ua.bellkross.reminder.tasklist.model.Task;
+
+import static ua.bellkross.reminder.tasklist.TaskListActivity.ADD_ELEMENT_ACTION_TAG;
+import static ua.bellkross.reminder.tasklist.TaskListActivity.POSITION_IN_LIST_TAG;
+import static ua.bellkross.reminder.tasklist.TaskListActivity.STATE_ITEM_TAG;
 
 public class NotDoneFragment extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -50,12 +55,21 @@ public class NotDoneFragment extends Fragment implements SearchView.OnQueryTextL
         recyclerView = view.findViewById(R.id.recycler_not_done);
         RecyclerAdapterDone.getInstance(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(RecyclerAdapterND.getInstance(getContext(), view1 -> {
-            int recyclerViewPosition = recyclerView.getChildAdapterPosition(view1);
+        recyclerView.setAdapter(RecyclerAdapterND.getInstance(getContext(), v -> {
+            int recyclerViewPosition = recyclerView.getChildAdapterPosition(v);
             Task tmpTask = ArrayListNDTasks.getInstance().get(recyclerViewPosition);
             RecyclerAdapterND.getInstance().remove(tmpTask.getPositionInDatabase());
             tmpTask.setDone(1);
             RecyclerAdapterDone.getInstance().add(tmpTask);
+            return true;
+        }, view1 -> {
+            int recyclerViewPosition = recyclerView.getChildAdapterPosition(view1);
+            Intent intent = new Intent(getContext().getApplicationContext(), EditActivity.class);
+            Task tmpTask = ArrayListNDTasks.getInstance().get(recyclerViewPosition);
+            intent.putExtra(ADD_ELEMENT_ACTION_TAG, false);
+            intent.putExtra(POSITION_IN_LIST_TAG, tmpTask.getPositionInList());
+            intent.putExtra(STATE_ITEM_TAG, tmpTask.getDone());
+            startActivity(intent);
         }));
 
         return view;

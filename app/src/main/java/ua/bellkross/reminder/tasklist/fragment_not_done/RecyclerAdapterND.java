@@ -24,10 +24,13 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> implem
     private LayoutInflater layoutInflater;
     private ArrayList<Task> arrayList;
     private View.OnClickListener onClickListener;
+    private View.OnLongClickListener onLongClickListener;
 
-    private RecyclerAdapterND(Context context, View.OnClickListener onClickListener) {
+    private RecyclerAdapterND(Context context, View.OnLongClickListener onLongClickListener,
+                              View.OnClickListener onClickListener) {
 
         this.onClickListener = onClickListener;
+        this.onLongClickListener = onLongClickListener;
         layoutInflater = LayoutInflater.from(context);
         this.arrayList = new ArrayList<>();
         sort();
@@ -35,8 +38,11 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> implem
 
     }
 
-    public static RecyclerAdapterND getInstance(Context context, View.OnClickListener onClickListener) {
-        return instance == null ? new RecyclerAdapterND(context, onClickListener) : instance;
+    public static RecyclerAdapterND getInstance(Context context,
+                                                View.OnLongClickListener onLongClickListener,
+                                                View.OnClickListener onClickListener) {
+        return instance == null ? new RecyclerAdapterND(context,
+                onLongClickListener, onClickListener) : instance;
     }
 
     public static RecyclerAdapterND getInstance() {
@@ -48,6 +54,7 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> implem
 
         View view = layoutInflater.inflate(R.layout.rv_item_not_done, parent, false);
         view.setOnClickListener(onClickListener);
+        view.setOnLongClickListener(onLongClickListener);
         MyViewHolder holder = new MyViewHolder(view);
 
         return holder;
@@ -95,10 +102,8 @@ public class RecyclerAdapterND extends RecyclerView.Adapter<MyViewHolder> implem
     }
 
     @Override
-    public void update(Task inputTask, int listPos, int dbPos) {
-        //DBHelper.getInstance().updateDB(""+posDB,inputTask);
-        ArrayListNDTasks.getInstance().set(listPos, inputTask);
-        //ArrayListNDTasks.getInstance().sort();
+    public void update(Task inputTask, int dbPos) {
+        DBHelper.getInstance().updateInDB(""+dbPos,inputTask);
         sort();
     }
 

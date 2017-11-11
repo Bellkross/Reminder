@@ -28,6 +28,8 @@ public class TaskListActivity extends AppCompatActivity {
     public static final int NOT_DONE_STATE = 0;
     public static final String LOG_TAG = "debug";
     public static final String ADD_ELEMENT_ACTION_TAG = "Add new element action";
+    public static final String POSITION_IN_LIST_TAG = "position in list";
+    public static final String STATE_ITEM_TAG = "state of item";
     private Toolbar toolbar;
     private Spinner spinner;
     private FloatingActionButton fab;

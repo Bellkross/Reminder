@@ -23,6 +23,7 @@ public class RecyclerAdapterDone extends RecyclerView.Adapter<MyViewHolder> impl
     private LayoutInflater layoutInflater;
     private ArrayList<Task> arrayList;
     private View.OnClickListener onClickListener;
+    private View.OnLongClickListener onLongClickListener;
 
     private RecyclerAdapterDone(Context context, View.OnClickListener onClickListener) {
         this.instance = this;
@@ -55,6 +56,7 @@ public class RecyclerAdapterDone extends RecyclerView.Adapter<MyViewHolder> impl
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.rv_item_done, parent, false);
         view.setOnClickListener(onClickListener);
+        view.setOnLongClickListener(onLongClickListener);
         MyViewHolder holder = new MyViewHolder(view);
 
         return holder;
@@ -96,8 +98,9 @@ public class RecyclerAdapterDone extends RecyclerView.Adapter<MyViewHolder> impl
     }
 
     @Override
-    public void update(Task inputTask, int listPos, int dbPos) {
-
+    public void update(Task inputTask, int dbPos) {
+        DBHelper.getInstance().updateInDB(""+dbPos,inputTask);
+        sort();
     }
 
     @Override
@@ -124,4 +127,11 @@ public class RecyclerAdapterDone extends RecyclerView.Adapter<MyViewHolder> impl
         this.onClickListener = onClickListener;
     }
 
+    public View.OnLongClickListener getOnLongClickListener() {
+        return onLongClickListener;
+    }
+
+    public void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
+    }
 }

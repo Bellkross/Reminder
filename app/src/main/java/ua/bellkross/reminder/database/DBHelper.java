@@ -114,6 +114,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateInDB(String id, Task task){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(POSITION_IN_LIST_TAG, task.getPositionInList());
+        contentValues.put(TASK_TAG, task.getTask());
+        contentValues.put(DEADLINE_TAG, task.getDeadline());
+        contentValues.put(DEADLINE_DATE_TAG, task.getDateOfDeadline().getTime());
+        contentValues.put(STATE_TAG, task.getDone());
+        db.update(TABLE_NAME, contentValues, "ID = ?", new String[]{id});
+        db.close();
+        contentValues.clear();
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "(" +

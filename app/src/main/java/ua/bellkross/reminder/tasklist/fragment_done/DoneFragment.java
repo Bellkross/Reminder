@@ -1,6 +1,7 @@
 package ua.bellkross.reminder.tasklist.fragment_done;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +16,14 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import ua.bellkross.reminder.R;
+import ua.bellkross.reminder.edit.EditActivity;
 import ua.bellkross.reminder.tasklist.model.ArrayListDTasks;
+import ua.bellkross.reminder.tasklist.model.ArrayListNDTasks;
+import ua.bellkross.reminder.tasklist.model.Task;
+
+import static ua.bellkross.reminder.tasklist.TaskListActivity.ADD_ELEMENT_ACTION_TAG;
+import static ua.bellkross.reminder.tasklist.TaskListActivity.POSITION_IN_LIST_TAG;
+import static ua.bellkross.reminder.tasklist.TaskListActivity.STATE_ITEM_TAG;
 
 public class DoneFragment extends Fragment implements SearchView.OnQueryTextListener {
 
@@ -41,8 +49,21 @@ public class DoneFragment extends Fragment implements SearchView.OnQueryTextList
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         RecyclerAdapterDone.getInstance().setOnClickListener(view1 -> {
             int recyclerViewPosition = recyclerView.getChildAdapterPosition(view1);
-            RecyclerAdapterDone.getInstance().remove(ArrayListDTasks.getInstance().
-                    get(recyclerViewPosition).getPositionInDatabase());
+            Intent intent = new Intent(getContext().getApplicationContext(), EditActivity.class);
+            Task tmpTask = ArrayListDTasks.getInstance().get(recyclerViewPosition);
+            intent.putExtra(ADD_ELEMENT_ACTION_TAG, false);
+            intent.putExtra(POSITION_IN_LIST_TAG, tmpTask.getPositionInList());
+            intent.putExtra(STATE_ITEM_TAG, tmpTask.getDone());
+            startActivity(intent);
+        });
+        RecyclerAdapterDone.getInstance().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int recyclerViewPosition = recyclerView.getChildAdapterPosition(v);
+                RecyclerAdapterDone.getInstance().remove(ArrayListDTasks.getInstance().
+                        get(recyclerViewPosition).getPositionInDatabase());
+                return true;
+            }
         });
         recyclerView.setAdapter(RecyclerAdapterDone.getInstance());
         return view;
